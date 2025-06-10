@@ -28,9 +28,6 @@ from copy import deepcopy
 import time
 import seaborn as sns
 
-
-
-
 def bootstrap_stability_selection(X, y, base_selector, n_bootstrap=3, stability_threshold=0.6):
     n_features = X.shape[1]
     selection_matrix = np.zeros((n_bootstrap, n_features))
@@ -140,9 +137,6 @@ def compute_fdd(similarity_matrix, y):
 
     return np.mean(pos)
 
-
-
-
 def compute_interaction_gain(X, y, current_set, candidate, sim_func):
     if not current_set:
         gamma_cand = sim_func(X[:, [candidate]], y)
@@ -186,10 +180,7 @@ def interaction_aware_frqr(X, y, max_iter=50, epsilon=1e-4):
         best_gamma = gamma_new_for_best
 
         print(f"Best Feature in Iteration {iteration}: {best_feature}, Gain: {best_gain:.4f}, γ: {best_gamma:.4f}")
-
     return selected, best_gamma
-
-
 
 def plot_runtimes(times, gamma_scores):
     fig, ax1 = plt.subplots()
@@ -212,8 +203,6 @@ def compute_redundancy(X, selected_features):
     upper_tri_indices = np.triu_indices_from(corr_matrix, k=1)
     avg_redundancy = np.mean(np.abs(corr_matrix[upper_tri_indices]))
     return avg_redundancy
-
-
 
 def evaluate_classifiers(X, y, selected_features):
     X_sel = X[:, selected_features]
@@ -262,8 +251,6 @@ def evaluate_classifiers(X, y, selected_features):
     cart_summary = {k: f"{np.mean(v):.4f} ± {np.std(v):.4f}" for k, v in cart_results.items()}
 
     return rf_summary, svm_summary, cart_summary
-
-
 
 def inject_label_noise(y, noise_level=0.1, seed=42):
     np.random.seed(seed)
